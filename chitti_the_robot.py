@@ -1,10 +1,8 @@
-
 import nltk
 from nltk.stem import WordNetLemmatizer
 import json
 import pickle
 import random
-
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -67,31 +65,53 @@ def app():
     st.title("Chatbot")
     st.write("Welcome! Start a conversation by typing in the message box below.")
 
-    # Initialize the messages list
-    if 'messages' not in st.session_state:
-        st.session_state['messages'] = []
+    # Initialize the chat history
+    if 'chat_history' not in st.session_state:
+        st.session_state['chat_history'] = []
 
-    # User input box
-    user_input = st.text_input("User Input", key="user_input")
+    # Function to display a chat message
+    def display_chat_message(role, message):
+        if role == 'user':
+            st.write(':smiley:', message)
+        elif role == 'bot':
+            st.write(':robot_face:', message)
 
-    if st.button("Send"):
-        if user_input:
-            # Add user message to session state
-            st.session_state['messages'].append({"role": "user", "content": user_input})
+    # Display the chat interface
+    st.title('Chat Application')
 
-            # Get chatbot response
-            bot_response = chatbot_response(user_input)
+    # Create a two-column layout
+    col1, col2 = st.beta_columns([4, 7])
 
-            # Add chatbot response to session state
-            st.session_state['messages'].append({"role": "bot", "content": bot_response})
+    # Sidebar for user input
+    with col1:
+        st.header('User Input')
+        user_input = st.text_input('Type your message here')
 
-    # Display messages
-    with st.beta_container():
-        for message in st.session_state['messages']:
-            if message['role'] == 'user':
-                st.text_area("User", value=message['content'])
-            elif message['role'] == 'bot':
-                st.text_area("Bot", value=message['content'])
+    # Main content area for chat history
+    with col2:
+        st.header('Chat History')
+        chat_history = st.empty()
+
+    # Process user input and generate response
+    if st.button('Send'):
+        # Get user input
+        user_message = user_input.strip()
+
+        # Add user message to chat history
+        st.session_state['chat_history'].append(('user', user_message))
+
+        # Generate bot response
+        bot_response = chatbot_response(user_message)
+
+        # Add bot response to chat history
+        st.session_state['chat_history'].append(('bot', bot_response))
+
+        # Clear user input
+        user_input = ''
+
+    # Display chat history
+    for role, message in st.session_state['chat_history']:
+        display_chat_message(role, message)
 
 if __name__ == '__main__':
     app()
