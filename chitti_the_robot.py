@@ -74,32 +74,25 @@ def app():
             st.write(':robot_face:', message)
 
     # Display the chat interface
-    st.markdown("<h1 style='text-align: center;'>Chat-Bot Integrated Application</h1>", unsafe_allow_html=True)
+    st.title('Chat Application')
 
-    # Calculate the width ratio for the layout
-    sidebar_width = 4
-    content_width = 12 - sidebar_width
-
-    # Create a two-column layout
-    col1, col2 = st.beta_columns([sidebar_width, content_width])
-
-    # Center the chat application
-    col1.empty()
-    col2.text("")
+    # Create a column layout
+    col1, col2 = st.beta_columns([1, 4])
 
     # Sidebar for user input and send button
     with col1:
-        st.header('User Input')
+        st.text('')  # Add space for alignment
         user_input = st.text_input('Type your message here')
 
         # Move the send button next to the input box
-        col1.text("")
-        col1.text("")
-        send_button = col1.button('Send')
+        send_button = st.button('Send')
 
     # Main content area for chat history
     with col2:
         st.header('Chat History')
+        st.markdown('---')  # Add a horizontal line for separation
+
+        # Display chat history
         for role, message in st.session_state['chat_history']:
             display_chat_message(role, message)
 
