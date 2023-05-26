@@ -65,7 +65,7 @@ def app():
     st.title("Chatbot")
     st.write("Welcome! Start a conversation by typing in the message box below.")
 
-    import streamlit as st
+   import streamlit as st
 
 # Initialize the chat history
 if 'chat_history' not in st.session_state:
@@ -81,22 +81,35 @@ def display_chat_message(role, message):
 # Display the chat interface
 st.title('Chat Application')
 
+# Calculate the width ratio for the layout
+sidebar_width = 4
+content_width = 12 - sidebar_width
+
 # Create a two-column layout
-col1, col2 = st.beta_columns([7, 4])
+col1, col2 = st.beta_columns([sidebar_width, content_width])
+
+# Center the chat application
+col1.empty()
+col2.text("")
+
+# Sidebar for user input and send button
+with col1:
+    st.header('User Input')
+    user_input = st.text_input('Type your message here')
+
+    # Move the send button next to the input box
+    col1.text("")
+    col1.text("")
+    send_button = col1.button('Send')
 
 # Main content area for chat history
-with col1:
+with col2:
     st.header('Chat History')
     for role, message in st.session_state['chat_history']:
         display_chat_message(role, message)
 
-# Sidebar for user input
-with col2:
-    st.header('User Input')
-    user_input = st.text_input('Type your message here')
-
 # Process user input and generate response
-if st.button('Send'):
+if send_button:
     # Get user input
     user_message = user_input.strip()
 
