@@ -1,8 +1,10 @@
+
+
 import nltk
 from nltk.stem import WordNetLemmatizer
 import json
 import pickle
-import nltk
+import random
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -10,7 +12,6 @@ nltk.download('wordnet')
 import numpy as np
 from keras.models import load_model
 
-import random
 import streamlit as st
 
 # Load the saved model
@@ -60,17 +61,35 @@ def chatbot_response(msg):
 with open('intents.json') as file:
     intents = json.load(file)
 
-# Main chat interface
-def chat_interface():
+# Create the main app interface
+def app():
     st.title("Chatbot")
-    chat_log = st.text_area("Chat Log", value="", height=300, disabled=True)
-    user_input = st.text_input("User Input")
-    if st.button("Send"):
-        if user_input.strip() != "":
-            chat_log += f"You: {user_input}\n"
-            bot_response = chatbot_response(user_input)
-            chat_log += f"Bot: {bot_response}\n"
-            st.text_area("Chat Log", value=chat_log, height=300, disabled=True)
+    st.write("Welcome! Start a conversation by typing in the message box below.")
 
-# Run the chat interface
-chat_interface()
+    # Initialize the messages list
+    if 'messages' not in st.session_state:
+        st.session_state['messages'] = []
+
+    # User input box
+    user_input = st.text_input("User Input", key="user_input")
+
+    if st.button("Send"):
+        if user_input:
+            # Add user message to session state
+            st.session_state['messages'].append({"role": "user", "content": user_input})
+
+            # Get chatbot response
+            bot_response = chatbot_response(user_input)
+
+            # Add chatbot response to session state
+            st.session_state['messages'].append({"role": "bot", "content": bot_response})
+
+    # Display messages
+    for message in st.session_state['messages']:
+        if message['role'] == 'user':
+            st.text_area("User", value=message['content'], key=message['content'])
+        elif message['role'] == 'bot':
+            st.text_area("Bot", value=message['content'], key=message['content'])
+
+if __name__ == '__main__':
+    app()
