@@ -2,6 +2,10 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 import json
 import pickle
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 import numpy as np
 from keras.models import load_model
