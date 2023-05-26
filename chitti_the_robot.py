@@ -79,15 +79,15 @@ st.markdown("<h1 style='text-align: center;'>Chat Application</h1>", unsafe_allo
 
 
     # Calculate the width ratio for the layout
-    sidebar_width = 4
-    content_width = 12 - sidebar_width
+sidebar_width = 4
+content_width = 12 - sidebar_width
 
     # Create a two-column layout
-    col1, col2 = st.beta_columns([sidebar_width, content_width])
+col1, col2 = st.beta_columns([sidebar_width, content_width])
 
     # Center the chat application
-    col1.empty()
-    col2.text("")
+col1.empty()
+col2.text("")
 
     # Sidebar for user input and send button
     with col1:
