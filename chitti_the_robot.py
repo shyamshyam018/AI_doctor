@@ -65,7 +65,6 @@ def app():
     st.title("Chatbot")
     st.write("Welcome! Start a conversation by typing in the message box below.")
 
-   import streamlit as st
 
 # Initialize the chat history
 if 'chat_history' not in st.session_state:
