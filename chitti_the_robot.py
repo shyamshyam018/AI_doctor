@@ -74,53 +74,51 @@ def app():
             st.write(':robot_face:', message)
 
     # Display the chat interface
-# Display the chat interface
-st.markdown("<h1 style='text-align: center;'>Chat Application</h1>", unsafe_allow_html=True)
-
+   st.markdown("<h1 style='text-align: center;'>Chat-Bot Integrated Application</h1>", unsafe_allow_html=True)
 
     # Calculate the width ratio for the layout
-sidebar_width = 4
-content_width = 12 - sidebar_width
+    sidebar_width = 4
+    content_width = 12 - sidebar_width
 
     # Create a two-column layout
-col1, col2 = st.beta_columns([sidebar_width, content_width])
+    col1, col2 = st.beta_columns([sidebar_width, content_width])
 
-# Center the chat application
-col1.empty()
-col2.text("")
+    # Center the chat application
+    col1.empty()
+    col2.text("")
 
-# Sidebar for user input and send button
-with col1:
-    st.header('User Input')
-    user_input = st.text_input('Type your message here')
+    # Sidebar for user input and send button
+    with col1:
+        st.header('User Input')
+        user_input = st.text_input('Type your message here')
 
-    # Move the send button next to the input box
-    col1.text("")
-    col1.text("")
-    send_button = col1.button('Send')
+        # Move the send button next to the input box
+        col1.text("")
+        col1.text("")
+        send_button = col1.button('Send')
 
-# Main content area for chat history
-with col2:
-    st.header('Chat History')
-    for role, message in st.session_state['chat_history']:
-        display_chat_message(role, message)
+    # Main content area for chat history
+    with col2:
+        st.header('Chat History')
+        for role, message in st.session_state['chat_history']:
+            display_chat_message(role, message)
 
-# Process user input and generate response
-if send_button:
-    # Get user input
-    user_message = user_input.strip()
+    # Process user input and generate response
+    if send_button:
+        # Get user input
+        user_message = user_input.strip()
 
-    # Add user message to chat history
-    st.session_state['chat_history'].append(('user', user_message))
+        # Add user message to chat history
+        st.session_state['chat_history'].append(('user', user_message))
 
-    # Generate bot response
-    bot_response = chatbot_response(user_message)
+        # Generate bot response
+        bot_response = chatbot_response(user_message)
 
-    # Add bot response to chat history
-    st.session_state['chat_history'].append(('bot', bot_response))
+        # Add bot response to chat history
+        st.session_state['chat_history'].append(('bot', bot_response))
 
-    # Clear user input
-    user_input = ''
+        # Clear user input
+        user_input = ''
 
 if __name__ == '__main__':
     app()
