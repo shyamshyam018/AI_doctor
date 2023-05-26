@@ -62,8 +62,6 @@ with open('intents.json') as file:
 
 # Create the main app interface
 def app():
-    st.title("Chatbot")
-    st.write("Welcome! Start a conversation by typing in the message box below.")
 
 
 # Initialize the chat history
@@ -78,7 +76,8 @@ def display_chat_message(role, message):
         st.write(':robot_face:', message)
 
 # Display the chat interface
-st.title('Chat Application')
+st.title('Chat Application', style='text-align: center;')
+
 
 # Calculate the width ratio for the layout
 sidebar_width = 4
