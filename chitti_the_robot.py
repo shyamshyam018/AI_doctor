@@ -1,13 +1,12 @@
 
-
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 import nltk
 from nltk.stem import WordNetLemmatizer
 import json
 import pickle
 import random
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
 
 import numpy as np
 from keras.models import load_model
@@ -85,11 +84,12 @@ def app():
             st.session_state['messages'].append({"role": "bot", "content": bot_response})
 
     # Display messages
-    for message in st.session_state['messages']:
-        if message['role'] == 'user':
-            st.text_area("User", value=message['content'], key=message['content'])
-        elif message['role'] == 'bot':
-            st.text_area("Bot", value=message['content'], key=message['content'])
+    with st.beta_container():
+        for message in st.session_state['messages']:
+            if message['role'] == 'user':
+                st.text_area("User", value=message['content'])
+            elif message['role'] == 'bot':
+                st.text_area("Bot", value=message['content'])
 
 if __name__ == '__main__':
     app()
