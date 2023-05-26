@@ -1,4 +1,0 @@
-streamlit==0.87.0
-openai==0.27.0
-streamlit-chat==0.0.2.2
-
