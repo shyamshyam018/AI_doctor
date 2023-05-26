@@ -74,7 +74,9 @@ def app():
             st.write(':robot_face:', message)
 
     # Display the chat interface
-    st.title('Chat Application', style='text-align: center;')
+# Display the chat interface
+st.markdown("<h1 style='text-align: center;'>Chat Application</h1>", unsafe_allow_html=True)
+
 
     # Calculate the width ratio for the layout
     sidebar_width = 4
